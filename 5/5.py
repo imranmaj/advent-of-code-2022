@@ -145,9 +145,9 @@ moves, stacks = get_moves_and_stacks()
 for move in moves:
     match = re.match(r"move (\d+) from (\d+) to (\d+)", move)
     num_moved, start_stack, end_stack = map(int, match.groups())
-    for _ in range(num_moved):
-        crate_to_move = stacks[start_stack - 1].pop()
-        stacks[end_stack - 1].append(crate_to_move)
+    crates_to_move = stacks[start_stack - 1][-num_moved:][::-1]
+    del stacks[start_stack - 1][-num_moved:]
+    stacks[end_stack - 1].extend(crates_to_move)
 print("".join(stack[-1] for stack in stacks))
 
 # part 2
